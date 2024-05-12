@@ -27,6 +27,35 @@ const registerUser = async (req, res) => {
   }
 };
 
+const loginUser = async (req, res) => {
+  try {
+    const userExit = await userModel.findOne({ email: req.body.email });
+    if (!userExit) {
+      return res.status(200).json({
+        success: false,
+        message: "User does not exist",
+      });
+    }
+    const validatePassword = await bcrypt.compare(
+      req.body?.password,
+      userExit?.password
+    );
+    if (!validatePassword) {
+      return res.status(200).json({
+        success: false,
+        message: "Invalid password",
+      });
+    }
+    return res.status(200).send({ message: "User Logged in", success: true });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message || "user has entered invalid data",
+    });
+  }
+};
+
 module.exports = {
   registerUser,
+  loginUser,
 };

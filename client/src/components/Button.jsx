@@ -20,7 +20,7 @@ const Button = ({ title, onClick, variant, disabled, fullWidth, type }) => {
       type={type}
       onClick={onClick}
       disabled={disabled}
-      style={{ border: "0px", color: "white" }}
+      style={{ border: "0px", color: "white", cursor: "pointer" }}
     >
       {title}
     </button>
